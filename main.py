@@ -1,118 +1,46 @@
-#!/usr/bin/env python3
-
-### Standard library imports
-import os 
-import time
 import requests
-import csv
-from datetime import datetime
+import json
+from dotenv import load_dotenv
+import os
 
-### Related third-party imports.
-# import schedule
+from spike_functions import show_on_gauge
 
-### Local application/library specific imports
-import spike_functions
-import api_profundo
+load_dotenv()
+api_key = os.getenv("KEY")
+base_url = 'https://giver.kirkensbymisjon.no'
+response = requests.get(f'{base_url}/ws-julekampanje?x-api-key={api_key}')
 
-### GLOBAL_CONSTANTS
-
-
-
-crontab = False
-api_result = [0, -30]
-
-### Function and Class Definitions
-
-class MyClass:
-    # Class docstring
-    def __init__(self):
-        pass
-
-def main_function():
-    # Function docstring
-    pass
-
-### Main Function
+# Convert the text response to JSON
+json_data = json.loads(response.text) 
 
 def main():
 
-    # Test for connection
-    check_internet_connection()
+    # Print values for all valid keys
+    valid_keys = ['i_antall_i_aar', 'm_sum_i_aar', 'm_max_i_aar', 'i_antall_i_fjor', 'm_sum_i_fjor', 'm_max_i_fjor', 'n_prosent_sum', 'n_prosent_antall', 'i_antall']
+    for key in valid_keys:
+        print(f"{key}: {get_profundo_data(key)}")
 
-    # Run the first job immediately to set the initial position
+    # Show on YoY growth on gauge
+    show_on_gauge(get_profundo_data('n_prosent_sum'))
 
-    get_profundo_data('m_sum_i_fjor')
-    
-    # Schedule the function to be called at following times
+def get_profundo_data(key_str):
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Convert the text response to JSON
+        json_data = json.loads(response.text)
+        json_data_striped = json_data['data']['rows'][0]
+        # Normalize the data to be all float
+        normalized_data = {}
+        for key, value in json_data_striped.items():
+            value = value.replace(' ', '')
+            value = value.replace(',', '.')
+            normalized_data.update({key: float(value)})
+                        
+            # print(normalized_data)
 
-    # schedule.every().day.at("09:00").do(my_scheduled_function)
-    # schedule.every().day.at("11:30").do(my_scheduled_function)
-    # schedule.every().day.at("15:00").do(my_scheduled_function)
-    # schedule.every().day.at("21:40").do(my_scheduled_function)
+        return normalized_data[key_str]
+    else:
+        return f'Failed to retrieve data. Status Code: {response.status_code}'
 
-    # schedule.every(15).minutes.do(my_scheduled_function)
-
-    # while True:
-    #     schedule.run_pending()
-    #     time.sleep(1)
-
-def my_scheduled_function():
-
-    data = get_profundo_data()
-    print(data)
-
-
-
-def log_the_output(date, message="No message was entered"):
-
-    # Define the name of the logfile
-  
-    logfile = '/home/pi/Projects/givewp_glede/logs/log.csv'
-
-    # Data to be written to the logfile
-    data_to_log = {
-        'timestamp': date.strftime('%Y-%m-%d %H:%M:%S'),
-        'message': message
-    }
-
-    # Function to append data to the logfile
-    def append_to_log(filename, data):
-        # Check if the file exists and if it's empty to write headers
-        try:
-            file_empty = False
-            with open(filename, 'r', newline='') as csvfile:
-                file_empty = csvfile.read(1) == ''
-        except FileNotFoundError:
-            file_empty = True  # File does not exist, will be created
-
-        # Open the file in append mode
-        with open(filename, 'a', newline='') as csvfile:
-            fieldnames = data.keys()
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-            # Write the header if the file is empty
-            if file_empty:
-                writer.writeheader()
-
-            # Write the data row
-            writer.writerow(data)
-
-    # Append new data to the logfile
-    append_to_log(logfile, data_to_log)
-
-def check_internet_connection(url='http://www.google.com', timeout=5):
-    """Check for an internet connection by trying to fetch the specified URL."""
-    try:
-        # Perform a GET request to the specified URL
-        response = requests.get(url, timeout=timeout)
-        log_the_output(datetime.now(), "Connection to internet is confirmed")
-        # If the request succeeds, return True
-        return True
-    except requests.ConnectionError:
-        # If a connection error occurs, return False
-        log_the_output(datetime.now(), "No internet connection available.")
-        return False
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

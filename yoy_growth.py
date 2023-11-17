@@ -1,7 +1,7 @@
 from buildhat import Motor
 from time import sleep
 
-api_result = [20, 25, 15, 5, -10, 0]
+api_result = [0]
 motor = Motor("B")
 
 one_degree = 800 / 30 * -1
@@ -22,7 +22,7 @@ def main():
 
 def show_on_dial(degrees):
     last_position = motor.get_position()
-    motor.run_for_degrees(one_degree * degrees - last_position)
+    motor.run_for_degrees(one_degree * degrees - last_position, 100)
     print(one_degree * degrees)
 
 

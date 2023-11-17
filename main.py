@@ -8,17 +8,16 @@ import csv
 from datetime import datetime
 
 ### Related third-party imports.
-from buildhat import Motor, ForceSensor
-import schedule
+# import schedule
 
 ### Local application/library specific imports
-from api_call import api_call
-from yoy_growth import show_on_dial
+import spike_functions
+import api_profundo
 
 ### GLOBAL_CONSTANTS
-motor = Motor('A')
-SALES_GOAL = 6200000
-MAX_RANGE_OF_MOTER = 8685
+
+
+
 crontab = False
 api_result = [0, -30]
 
@@ -37,19 +36,12 @@ def main_function():
 
 def main():
 
-    show_on_dial(20)
-    
     # Test for connection
     check_internet_connection()
 
-    # reset motor to 0 degrees
-    start_postion = motor.get_position()
-    motor.run_for_degrees(start_postion*-1)
-    time.sleep(3)
-
     # Run the first job immediately to set the initial position
 
-    my_scheduled_function()
+    get_profundo_data('m_sum_i_fjor')
     
     # Schedule the function to be called at following times
 
@@ -58,31 +50,18 @@ def main():
     # schedule.every().day.at("15:00").do(my_scheduled_function)
     # schedule.every().day.at("21:40").do(my_scheduled_function)
 
-    schedule.every(15).minutes.do(my_scheduled_function)
+    # schedule.every(15).minutes.do(my_scheduled_function)
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1)
 
 def my_scheduled_function():
 
-    target_position = get_api_value()
-    current_position = motor.get_position()    
-    degrees_to_adjust = target_position - current_position
+    data = get_profundo_data()
+    print(data)
 
-    if target_position > MAX_RANGE_OF_MOTER:
-        log_the_output(datetime.now(), "Gage out of range. Not running motor to prefent damage to Robot.")
-    else:
-        log_the_output(datetime.now(), f"Ran the motor to position: {target_position} by turning {degrees_to_adjust} degrees")
-        motor.run_for_degrees(degrees_to_adjust)
 
-def get_api_value():
-    
-    achived_goal_degrees_value = 4755
-    sum_donated_to_date = int(api_call())
-    precent_achieved = int(sum_donated_to_date/SALES_GOAL * 100)
-    api_value = int((achived_goal_degrees_value/100) * precent_achieved)
-    return api_value
 
 def log_the_output(date, message="No message was entered"):
 

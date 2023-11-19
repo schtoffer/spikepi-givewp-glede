@@ -2,8 +2,12 @@ import requests
 import json
 from dotenv import load_dotenv
 import os
+import time
 
-from spike_functions import show_on_gauge
+from buildhat import ForceSensor
+
+button_left = ForceSensor('C')
+button_right = ForceSensor('D')
 
 load_dotenv()
 api_key = os.getenv("KEY")
@@ -13,6 +17,8 @@ response = requests.get(f'{base_url}/ws-julekampanje?x-api-key={api_key}')
 # Convert the text response to JSON
 json_data = json.loads(response.text) 
 
+from spike_functions import show_on_gauge, show_on_tower
+
 def main():
 
     # Print values for all valid keys
@@ -20,8 +26,19 @@ def main():
     for key in valid_keys:
         print(f"{key}: {get_profundo_data(key)}")
 
-    # Show on YoY growth on gauge
-    show_on_gauge(get_profundo_data('n_prosent_sum'))
+    while True:
+        if button_left.is_pressed():
+            time.sleep(1)
+            if button_left.get_force() > 50:
+                show_on_gauge(0)
+                show_on_tower(0)
+                break
+            else:
+                show_on_gauge(get_profundo_data('n_prosent_sum'))
+                show_on_tower((get_profundo_data('m_sum_i_aar') / 45000000)*100)
+                print(f"prosent {show_on_tower((get_profundo_data('m_sum_i_aar') / 45000000)*100)}")
+            
+
 
 def get_profundo_data(key_str):
     # Check if the request was successful

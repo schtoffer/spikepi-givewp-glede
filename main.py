@@ -9,7 +9,27 @@ from buildhat.exc import BuildHATError  # Correctly importing the BuildHATError
 
 from spike_functions import show_on_gauge, show_on_tower
 
+import Adafruit_CharLCD as LCD
+
+lcd_rs = 26
+lcd_en = 19
+lcd_d4 = 13
+lcd_d5 = 12
+lcd_d6 = 24
+lcd_d7 = 6
+lcd_backlight = 2
+
+# Define LCD column and row size for 16x2 LCD.
+lcd_columns = 16
+lcd_rows = 2
+
+lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_columns, lcd_rows, lcd_backlight)
+
+
+
+
 def main():
+    
     # print(get_profundo_data())
     button_left = initialize_sensor('C')
     button_right = initialize_sensor('D')
@@ -18,18 +38,32 @@ def main():
     sales_goal = 60000000
 
     while True:
+        lcd.blink(False)
         if button_left.is_pressed():
+            
+
+            lcd.message('Henter tall')
+            lcd.set_cursor(0, 1)
+            lcd.message('Vennligst vent.')
+            time.sleep(4)
             print("Waiting for Profoundo-data")
             profundo_data = get_profundo_data()
             print("Profoundo-data revieved")
             achived_target = round((profundo_data['m_sum_i_aar'] / sales_goal) * 100)
             yoy_growth = profundo_data['n_prosent_sum']
-            
+            lcd.clear()
+            lcd.message('Talla er inne')
+            lcd.set_cursor(0, 1)
+            lcd.message('Viser resultater')
             print(profundo_data)
             show_on_tower(achived_target)
             show_on_gauge(yoy_growth)
+            lcd.clear()
+            lcd.message('Er du happy?')
             print("Tower and gaughe is updated")
             time.sleep(10)
+            lcd.clear()
+            
             
             show_on_tower(0)
             show_on_gauge(0)

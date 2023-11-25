@@ -1,15 +1,15 @@
-import requests
-import json
-from dotenv import load_dotenv
-import os
-import time
+import requests                 # api
+import json                     # api
+from dotenv import load_dotenv  # api
+import os                       # api
+import time                     # spike_functions
 
-from buildhat import ForceSensor, Motor
-from buildhat.exc import BuildHATError  # Correctly importing the BuildHATError
+from buildhat import ForceSensor, Motor     # spice_functions
+from buildhat.exc import BuildHATError      # spice_functions
 
 from spike_functions import show_on_gauge, show_on_tower
 
-import Adafruit_CharLCD as LCD
+import Adafruit_CharLCD as LCD  # lcd
 
 lcd_rs = 26
 lcd_en = 19
@@ -24,9 +24,6 @@ lcd_columns = 16
 lcd_rows = 2
 
 lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_columns, lcd_rows, lcd_backlight)
-
-
-
 
 def main():
     
@@ -56,6 +53,7 @@ def main():
             lcd.set_cursor(0, 1)
             lcd.message('Viser resultater')
             print(profundo_data)
+            time.sleep(3)
             show_on_tower(achived_target)
             show_on_gauge(yoy_growth)
             lcd.clear()

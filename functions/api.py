@@ -3,8 +3,11 @@ import json
 from dotenv import load_dotenv
 import os
 
+
+
 def main():
-    print(get_profundo_data())
+
+    pass
 
 def get_profundo_data():
     load_dotenv()

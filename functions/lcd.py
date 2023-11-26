@@ -90,7 +90,6 @@ def info_mesage_resetting(lcd):
     time.sleep(2)
     welcome_message(lcd)
     
-
 def idle_message(lcd):
     lcd.clear()
     lcd.message('Sist oppdatert:')

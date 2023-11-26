@@ -7,7 +7,7 @@ The goal is to increase internal awareness, and to mobilize our team in a fun an
 
 ## Demo video
 
-[![Video Thumbnail](images/video_thumbnail.png)](https://youtube.com/shorts/m0FWk3K4vDg?feature=share)
+[<img src="images/video_thumbnail.png" width="300">](https://youtube.com/shorts/m0FWk3K4vDg?feature=share)
 
 
 ## Images of the project

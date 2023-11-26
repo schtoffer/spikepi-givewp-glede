@@ -1,11 +1,16 @@
-## Readme
+# Readme
 This is a project that aims to show live data from Profundo CRM to a Raspeberry Pi, with Lego BuildHAT and LCD display.
 
 We use this to track our progress during our Christmas fundraising campaign. We compare ourselves to last years results.
 
 The goal is to increase internal awareness, and to mobilize our team in a fun and engaging way.
 
-# Images of the project
+## Demo video
+
+[![Video Thumbnail](images/video_thumbnail.png)](https://youtube.com/shorts/m0FWk3K4vDg?feature=share)
+
+
+## Images of the project
 
 _The robot_
 

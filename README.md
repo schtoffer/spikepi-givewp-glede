@@ -7,7 +7,8 @@ The goal is to increase internal awareness, and to mobilize our team in a fun an
 
 # Images of the project
 
-![Local Image in Folder](images/spikepi-profundo-5.jpg)
+<img src="images/spikepi-profundo-5.jpg" alt="The robot" width="200">
+
 *The robot*
 
 ![Local Image in Folder](images/spikepi-profundo-4.jpg)

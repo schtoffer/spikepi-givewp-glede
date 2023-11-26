@@ -14,7 +14,7 @@ The goal is to increase internal awareness, and to mobilize our team in a fun an
 
 _The robot_
 
-<img src="images/spikepi-profundo-5.jpg" alt="The robot" width="300">
+<img src="images/spikepi-profundo-5.jpg" alt="The robot" width="300" target="_blank">
 
 _User prompt_
 

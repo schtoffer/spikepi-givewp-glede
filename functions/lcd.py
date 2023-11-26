@@ -29,12 +29,12 @@ custom_char_æ = [
 
 custom_char_ø = [
     0b00000,
+    0b00000,
     0b01110,
     0b10011,
     0b10101,
     0b11001,
     0b01110,
-    0b00000,
     0b00000
 ]
 
@@ -63,13 +63,33 @@ def welcome_message(lcd):
     lcd.clear()
     lcd.message('Trykk p\x02 den')
     lcd.set_cursor(0, 1)
-    lcd.message('ræde knappen')
+    lcd.message('r\x01de knappen')
 
-def info_message(lcd):
+def info_message_fetching(lcd):
     lcd.clear()
     lcd.message('Henter tall')
     lcd.set_cursor(0, 1)
     lcd.message("vennligst vent")
+
+def info_message_ready(lcd):
+    lcd.clear()
+    lcd.message(f"Ferske tall")
+    lcd.set_cursor(0, 1)
+    lcd.message(f"er inne")
+    time.sleep(2)
+
+def info_message_motor(lcd):
+    lcd.clear()
+    lcd.message(f"Kj\x01rer motor")
+
+def info_mesage_resetting(lcd):
+    lcd.clear()
+    lcd.message('Tilbakestiller')
+    lcd.set_cursor(0, 1)
+    lcd.message("motorer")
+    time.sleep(2)
+    welcome_message(lcd)
+    
 
 def idle_message(lcd):
     lcd.clear()
@@ -83,3 +103,26 @@ def idle_message(lcd):
 
     lcd.set_cursor(0, 1)
     lcd.message(current_time_formatted)
+
+def results_message(lcd, message):
+    lcd.clear()
+    lcd.message(f"Totalt innsamlet:")
+    lcd.set_cursor(0, 1)
+    lcd.message(message)
+    time.sleep(8)
+
+def results_message_percent(lcd, percent):
+    lcd.clear()
+    lcd.message(f"Det er {percent}% av")
+    lcd.set_cursor(0, 1)
+    lcd.message("Juleaksjon 2022")
+    time.sleep(6)
+
+def info_ip_adresse(lcd, function):
+    lcd.clear()
+    lcd.message("IP Address:")
+    lcd.set_cursor(0, 1)
+    lcd.message(f"{function}")
+    time.sleep(10)
+    welcome_message(lcd)
+

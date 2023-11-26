@@ -7,18 +7,17 @@ The goal is to increase internal awareness, and to mobilize our team in a fun an
 
 # Images of the project
 
-<img src="images/spikepi-profundo-5.jpg" alt="The robot" width="200">
-
+<img src="images/spikepi-profundo-5.jpg" alt="The robot" width="300">
 *The robot*
 
-![Local Image in Folder](images/spikepi-profundo-4.jpg)
+<img src="images/spikepi-profundo-4.jpg" alt="User prompt" width="300">
 *User prompt*
 
-![Local Image in Folder](images/spikepi-profundo-3.jpg)
+<img src="images/spikepi-profundo-3.jpg" alt="Big old red button" width="300">
 *Big old red button*
 
-![Local Image in Folder](images/spikepi-profundo-2.jpg)
+<img src="images/spikepi-profundo-2.jpg" alt="The target to beat" width="300">
 *The target to beat*
 
-![Local Image in Folder](images/spikepi-profundo-1.jpg)
+<img src="images/spikepi-profundo-1.jpg" alt="aspberry Pi 4 and Lego BuldHAT" width="300">
 *Raspberry Pi 4 and Lego BuldHAT*

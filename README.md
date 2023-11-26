@@ -1,2 +1,2 @@
 ## Readme
-This is a project that aims to represent live data from our CRM system to a Raspeberry pi robot build with Spike Prime.
+This is a project that aims to present live data from our Profundo CRM to a Raspeberry Pi with BuildHAT and a LCD display.
